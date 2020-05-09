@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { View, Text, StyleSheet } from "react-native";
 
 const CategoriesMealsScreen = (props) => {
-  const catId = props.navigation.getParam("categoryId");
+  const catId = props.route.params.categoryId;
 
   const availableMeals = useSelector((state) => state.meals.filteredMeals);
 
@@ -24,8 +24,8 @@ const CategoriesMealsScreen = (props) => {
   return <MealList listData={displayedMeals} navigation={props.navigation} />;
 };
 
-CategoriesMealsScreen.navigationOptions = (navigationData) => {
-  const catId = navigationData.navigation.getParam("categoryId");
+export const screenOptions = (navData) => {
+  const catId = navData.route.params.categoryId;
   const selectedCat = CATEGORIES.find((cat) => cat.id === catId);
 
   return {

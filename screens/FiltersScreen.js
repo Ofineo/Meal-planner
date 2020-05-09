@@ -7,7 +7,6 @@ import { setFilters } from "../store/actions/meals";
 import FilterSwitch from "../components/FilterSwitch";
 import { AppLoading } from "expo";
 
-
 const FiltersScreen = (props) => {
   const [isGlutenFree, setIsGlutenFree] = useState(false);
   const [isVegan, setIsVegan] = useState(false);
@@ -29,7 +28,24 @@ const FiltersScreen = (props) => {
   }, [isVegetarian, isGlutenFree, isVegan, isLactoseFree, dispatch]);
 
   useEffect(() => {
-    props.navigation.setParams({ save: saveFilters });
+    props.navigation.setOptions({
+      headerLeft: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="Menu"
+            iconName="ios-menu"
+            onPress={() => {
+              props.navigation.toggleDrawer();
+            }}
+          />
+        </HeaderButtons>
+      ),
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item title="Save" iconName="ios-save" onPress={saveFilters} />
+        </HeaderButtons>
+      ),
+    });
   }, [saveFilters]);
 
   return (
@@ -59,28 +75,8 @@ const FiltersScreen = (props) => {
   );
 };
 
-FiltersScreen.navigationOptions = (navigationData) => {
+export const screenOptions = (navData) => {
   return {
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Menu"
-          iconName="ios-menu"
-          onPress={() => {
-            navigationData.navigation.toggleDrawer();
-          }}
-        />
-      </HeaderButtons>
-    ),
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Save"
-          iconName="ios-save"
-          onPress={navigationData.navigation.getParam("save")}
-        />
-      </HeaderButtons>
-    ),
     title: "Filter Meals",
   };
 };

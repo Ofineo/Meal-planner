@@ -15,7 +15,7 @@ const ListItem = (props) => {
 };
 
 const MealDetailScreen = (props) => {
-  const meal = props.navigation.getParam("meal");
+  const meal = props.route.params.meal;
 
   const isFavorite = useSelector((state) =>
     state.meals.favoriteMeals.some((m) => m.id === meal.id)
@@ -55,10 +55,10 @@ const MealDetailScreen = (props) => {
   );
 };
 
-MealDetailScreen.navigationOptions = (navigationData) => {
-  const meal = navigationData.navigation.getParam("meal");
-  const toggleFavorite = navigationData.navigation.getParam("toggleFav");
-  const isFavorite = navigationData.navigation.getParam("isFav");
+export const screenOptions = (navData) => {
+  const meal = navData.route.params.meal;
+  const toggleFavorite = navData.route.params.toggleFav;
+  const isFavorite = navData.route.params.isFav;
   return {
     title: meal.title,
     headerRight: () => (

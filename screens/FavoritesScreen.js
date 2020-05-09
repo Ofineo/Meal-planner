@@ -19,7 +19,7 @@ const FavoritesScreen = (props) => {
   return <MealList listData={favMeals} navigation={props.navigation} />;
 };
 
-FavoritesScreen.navigationOptions = (navigationData) => {
+export const screenOptions = (navData) => {
   return {
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
@@ -27,7 +27,7 @@ FavoritesScreen.navigationOptions = (navigationData) => {
           title="Menu"
           iconName="ios-menu"
           onPress={() => {
-            navigationData.navigation.toggleDrawer();
+            navData.navigation.toggleDrawer();
           }}
         />
       </HeaderButtons>

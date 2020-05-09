@@ -12,11 +12,8 @@ const CategoriesScreen = (props) => {
         title={itemData.item.title}
         color={itemData.item.color}
         onSelect={() => {
-          props.navigation.navigate({
-            routeName: "Categorymeals",
-            params: {
-              categoryId: itemData.item.id,
-            },
+          props.navigation.navigate("Categorymeals", {
+            categoryId: itemData.item.id,
           });
         }}
       />
@@ -33,15 +30,16 @@ const CategoriesScreen = (props) => {
   );
 };
 
-CategoriesScreen.navigationOptions = (navigationData) => {
+export const screenOptions = (navData) => {
   return {
+    title: "Meal Categories",
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Menu"
           iconName="ios-menu"
           onPress={() => {
-            navigationData.navigation.toggleDrawer();
+            navData.navigation.toggleDrawer();
           }}
         />
       </HeaderButtons>

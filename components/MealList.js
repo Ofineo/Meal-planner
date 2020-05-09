@@ -7,17 +7,14 @@ const MealList = (props) => {
   const favMeals = useSelector((state) => state.meals.favoriteMeals);
 
   const renderMealItem = (itemData) => {
-    const isFavorite = favMeals.some(meal=>meal.id === itemData.item.id);
+    const isFavorite = favMeals.some((meal) => meal.id === itemData.item.id);
     return (
       <MealItem
         meal={itemData.item}
         onSelectMeal={() => {
-          props.navigation.navigate({
-            routeName: "Mealdetail",
-            params: {
-              meal: itemData.item,
-              isFav: isFavorite,
-            },
+          props.navigation.navigate("Mealdetail", {
+            meal: itemData.item,
+            isFav: isFavorite,
           });
         }}
       />
