@@ -86,15 +86,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-  filterContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignContent: "center",
-    width: "80%",
-    marginVertical: 15,
-  },
   title: {
-    fontFamily: "open-sans-bold",
+    fontFamily: "bb2-bold",
     fontSize: 22,
     margin: 20,
     textAlign: "center",

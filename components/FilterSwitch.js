@@ -4,7 +4,7 @@ import Colors from "../constants/Colors";
 
 const FilterSwitch = (props) => {
   return (
-    <View style={styles.filterContainer}>
+    <View style={{ ...styles.filterContainer, ...props }}>
       <Text style={{ fontSize: 17 }}>{props.label}</Text>
       <Switch
         value={props.state}
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
     width: "80%",
     marginVertical: 15,
+    fontFamily: "bb2-regular",
   },
 });
 

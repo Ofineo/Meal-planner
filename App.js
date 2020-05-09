@@ -5,6 +5,7 @@ import AppNavigator from "./navigation/MealsNavigator";
 import { enableScreens } from "react-native-screens";
 import { createStore, combineReducers } from "redux";
 import mealsReducer from "./store/reducer/meals";
+import ingredientsReducer from "./store/reducer/ingredients";
 import { Provider } from "react-redux";
 import { applyMiddleware } from "redux";
 import ReduxThunk from "redux-thunk";
@@ -13,6 +14,7 @@ enableScreens();
 
 const rootReducer = combineReducers({
   meals: mealsReducer,
+  ingredients: ingredientsReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
