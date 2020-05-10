@@ -30,6 +30,8 @@ import IngredientScreen, {
   screenOptions as IngredientScreenOptions,
 } from "../screens/IngredientsScreen";
 import AddNewMealScreen from "../screens/AddNewMealScreen";
+import WeekPlannerScreen from "../screens/WeekPlannerScreen";
+import ShopListScreen,{screenOptions as ShopListScreenOptions} from "../screens/ShopListScreen";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -65,8 +67,37 @@ export const MealsNavigator = () => {
         component={MealDetailScreen}
         options={mealDetailScreenOptions}
       />
-      <MealsStackNavigator.Screen name='Add meal' component={AddNewMealScreen} />
+      <MealsStackNavigator.Screen name='AddMeal' component={AddNewMealScreen} />
     </MealsStackNavigator.Navigator>
+  );
+};
+
+const WeekPlanStackNavigator = createStackNavigator();
+
+const WeekPlanNavigator=()=>{
+  return(
+    <WeekPlanStackNavigator.Navigator>
+      <WeekPlanStackNavigator.Screen name='Weekplanner' component={WeekPlannerScreen} />
+      <MealsStackNavigator.Screen
+        name="Categories"
+        component={CategoriesScreen}
+        options={categoriesScreenOptions}
+      />
+      <MealsStackNavigator.Screen
+        name="Categorymeals"
+        component={CategoriesMealsScreen}
+        options={categoriesMealsScreenOptions}
+      />
+      <MealsStackNavigator.Screen
+        name="Mealdetail"
+        component={MealDetailScreen}
+        options={mealDetailScreenOptions}
+      />
+      <MealsStackNavigator.Screen name='AddMeal' component={AddNewMealScreen} />
+      <MealsStackNavigator.Screen name='Shopping' component={ShopListScreen} />
+    </WeekPlanStackNavigator.Navigator>
+
+  
   );
 };
 
@@ -130,7 +161,7 @@ export const MealsFavTabNavigator = () => {
       />
       <MealsFavBottomTabsNavigator.Screen
         name="Favorites"
-        component={FavoritesNavigator}
+        component={WeekPlanNavigator}
         options={{
           tabBarLabel:
             Platform.OS === "android" ? (
@@ -141,7 +172,7 @@ export const MealsFavTabNavigator = () => {
           tabBarIcon: (tabInfo) => {
             return (
               <Ionicons
-                name="ios-star"
+                name="md-calendar"
                 size={tabInfo.focused ? 27 : 22}
                 color={tabInfo.color}
               />
@@ -184,6 +215,20 @@ export const IngredientsNavigator = () => {
   );
 };
 
+const ShoppingStackNavigator = createStackNavigator();
+
+export const ShoppingNavigator = () => {
+  return (
+    <ShoppingStackNavigator.Navigator screenOptions={defaultStackNavOptions}>
+      <ShoppingStackNavigator.Screen
+        name="Shopping"
+        component={ShopListScreen}
+        options={ShopListScreenOptions}
+      />
+    </ShoppingStackNavigator.Navigator>
+  );
+};
+
 const MainDrawerNavigator = createDrawerNavigator();
 
 export const MainNavigator = () => {
@@ -203,6 +248,10 @@ export const MainNavigator = () => {
       <MainDrawerNavigator.Screen
         name="Ingredients"
         component={IngredientsNavigator}
+      />
+      <MainDrawerNavigator.Screen
+        name="Shopping"
+        component={ShoppingNavigator}
       />
     </MainDrawerNavigator.Navigator>
   );

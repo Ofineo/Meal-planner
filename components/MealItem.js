@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   title: {
-    fontFamily: "open-sans-bold",
+    fontFamily: "bb2-bold",
     fontSize: 22,
     color: "white",
     textAlign: "center",

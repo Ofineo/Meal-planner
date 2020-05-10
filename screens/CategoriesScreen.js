@@ -50,7 +50,7 @@ export const screenOptions = (navData) => {
           title="Add"
           iconName={Platform.OS === "android" ? "md-add-circle" : "ios-add"}
           onPress={() => {
-            navData.navigation.navigate("Add meal");
+            navData.navigation.navigate("AddMeal");
           }}
         />
       </HeaderButtons>
