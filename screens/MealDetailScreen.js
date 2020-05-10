@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     height: "15%",
   },
   title: {
-    fontFamily: "open-sans-bold",
+    fontFamily: "bb2-bold",
     fontSize: 22,
     textAlign: "center",
   },

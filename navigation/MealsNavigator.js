@@ -29,6 +29,7 @@ import Colors from "../constants/Colors";
 import IngredientScreen, {
   screenOptions as IngredientScreenOptions,
 } from "../screens/IngredientsScreen";
+import AddNewMealScreen from "../screens/AddNewMealScreen";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -36,10 +37,10 @@ const defaultStackNavOptions = {
   },
   headerTitleStyle: {
     alignSelf: "center",
-    fontFamily: "open-sans-bold",
+    fontFamily: "bb2-bold",
   },
   headerBackTitleStyle: {
-    fontFamily: "open-sans",
+    fontFamily: "bb2-regular",
   },
   headerTintColor: Platform.OS === "ios" ? Colors.primaryColor : "white",
 };
@@ -64,6 +65,7 @@ export const MealsNavigator = () => {
         component={MealDetailScreen}
         options={mealDetailScreenOptions}
       />
+      <MealsStackNavigator.Screen name='Add meal' component={AddNewMealScreen} />
     </MealsStackNavigator.Navigator>
   );
 };
