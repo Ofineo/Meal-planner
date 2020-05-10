@@ -31,7 +31,9 @@ import IngredientScreen, {
 } from "../screens/IngredientsScreen";
 import AddNewMealScreen from "../screens/AddNewMealScreen";
 import WeekPlannerScreen from "../screens/WeekPlannerScreen";
-import ShopListScreen,{screenOptions as ShopListScreenOptions} from "../screens/ShopListScreen";
+import ShopListScreen, {
+  screenOptions as ShopListScreenOptions,
+} from "../screens/ShopListScreen";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -67,17 +69,28 @@ export const MealsNavigator = () => {
         component={MealDetailScreen}
         options={mealDetailScreenOptions}
       />
-      <MealsStackNavigator.Screen name='AddMeal' component={AddNewMealScreen} />
+      <MealsStackNavigator.Screen name="AddMeal" component={AddNewMealScreen} />
     </MealsStackNavigator.Navigator>
   );
 };
 
 const WeekPlanStackNavigator = createStackNavigator();
 
-const WeekPlanNavigator=()=>{
-  return(
-    <WeekPlanStackNavigator.Navigator>
-      <WeekPlanStackNavigator.Screen name='Weekplanner' component={WeekPlannerScreen} />
+const WeekPlanNavigator = () => {
+  return (
+    <WeekPlanStackNavigator.Navigator
+      screenOptions={{
+        ...defaultStackNavOptions,
+        headerStyle: {
+          backgroundColor:
+            Platform.OS === "android" ? Colors.thirdColor : "white",
+        },
+      }}
+    >
+      <WeekPlanStackNavigator.Screen
+        name="Weekplanner"
+        component={WeekPlannerScreen}
+      />
       <MealsStackNavigator.Screen
         name="Categories"
         component={CategoriesScreen}
@@ -93,11 +106,9 @@ const WeekPlanNavigator=()=>{
         component={MealDetailScreen}
         options={mealDetailScreenOptions}
       />
-      <MealsStackNavigator.Screen name='AddMeal' component={AddNewMealScreen} />
-      <MealsStackNavigator.Screen name='Shopping' component={ShopListScreen} />
+      <MealsStackNavigator.Screen name="AddMeal" component={AddNewMealScreen} />
+      <MealsStackNavigator.Screen name="Shopping" component={ShopListScreen} />
     </WeekPlanStackNavigator.Navigator>
-
-  
   );
 };
 
