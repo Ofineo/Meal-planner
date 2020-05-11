@@ -1,10 +1,18 @@
 import React, { useEffect, useCallback } from "react";
-import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  Button,
+} from "react-native";
 import CustomHeaderButton from "../components/HeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import DefaultText from "../components/DefaultText";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleFavorite } from "../store/actions/meals";
+import * as mealsActions from "../store/actions/meals";
+import Colors from "../constants/Colors";
 
 const ListItem = (props) => {
   return (
@@ -16,6 +24,7 @@ const ListItem = (props) => {
 
 const MealDetailScreen = (props) => {
   const meal = props.route.params.meal;
+  const weekday = useSelector((state) => state.weekday.weekday);
 
   const isFavorite = useSelector((state) =>
     state.meals.favoriteMeals.some((m) => m.id === meal.id)
@@ -23,7 +32,7 @@ const MealDetailScreen = (props) => {
   const dispatch = useDispatch();
 
   const toggleFavoriteHandler = useCallback(() => {
-    dispatch(toggleFavorite(meal.id));
+    dispatch(mealsActions.toggleFavorite(meal.id));
   }, [dispatch]);
 
   useEffect(() => {
@@ -38,9 +47,28 @@ const MealDetailScreen = (props) => {
     <ScrollView>
       <Image source={{ uri: meal.imageUrl }} style={styles.image} />
       <View style={styles.details}>
-        <DefaultText>{meal.duration}</DefaultText>
-        <DefaultText>{meal.complexity.toUpperCase()}</DefaultText>
-        <DefaultText>{meal.afordability.toUpperCase()}</DefaultText>
+        <DefaultText style={{ fontFamily: "bb2-bold", fontSize: 15 }}>
+          {meal.duration} min
+        </DefaultText>
+        <DefaultText style={{ fontFamily: "bb2-bold", fontSize: 15 }}>
+          {meal.complexity.toUpperCase()}
+        </DefaultText>
+        <DefaultText style={{ fontFamily: "bb2-bold", fontSize: 15 }}>
+          {meal.afordability.toUpperCase()}
+        </DefaultText>
+      </View>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: 10,
+        }}
+      >
+        <Button
+          title={`Add to ${weekday}`}
+          color={Colors.primaryColor}
+          onPress={() => dispatch(mealsActions.addMealToWeekday(weekday,meal))}
+        />
       </View>
       <Text style={styles.title}>Ingredients</Text>
       {meal.ingredients.map((ingredient) => (
@@ -79,10 +107,11 @@ const styles = StyleSheet.create({
     height: 200,
   },
   details: {
+    flexDirection: "row",
     paddingHorizontal: 10,
     justifyContent: "space-between",
     alignContent: "center",
-    height: "15%",
+    height: "5%",
   },
   title: {
     fontFamily: "bb2-bold",

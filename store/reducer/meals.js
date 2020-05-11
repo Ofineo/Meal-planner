@@ -1,10 +1,19 @@
 import { MEALS } from "../../data/dummy-data";
-import { TOGGLE_FAVORITE, SET_FILTERS } from "../actions/meals";
+import { TOGGLE_FAVORITE, SET_FILTERS, ADD_TO_WEEKDAY } from "../actions/meals";
 
 const initialState = {
   meals: MEALS,
   filteredMeals: MEALS,
   favoriteMeals: [],
+  weekMeals: {
+    Monday: {},
+    Tuesday: {},
+    Wednesday: {},
+    Thursday: {},
+    Friday: {},
+    Saturday: {},
+    Sunday: {},
+  },
 };
 
 const mealsReducer = (state = initialState, action) => {
@@ -43,6 +52,15 @@ const mealsReducer = (state = initialState, action) => {
         return true;
       });
       return { ...state, filteredMeals: updatedfilteredMeals };
+
+    case ADD_TO_WEEKDAY:
+      const updatedWeekMeals = { ...state.weekMeals };
+      updatedWeekMeals[action.day] = action.meal;
+
+      return {
+        ...state,
+        weekMeals: updatedWeekMeals,
+      };
 
     default:
       return state;

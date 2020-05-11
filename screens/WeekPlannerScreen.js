@@ -10,6 +10,8 @@ import {
   Image,
 } from "react-native";
 import Colors from "../constants/Colors";
+import { useDispatch, useSelector } from "react-redux";
+import * as weekdayActions from "../store/actions/weekday";
 
 import { Ionicons } from "@expo/vector-icons";
 
@@ -19,37 +21,40 @@ const TouchableComponent =
     : TouchableOpacity;
 
 const WeekdayComponent = (props) => {
-  const weekdays = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-  return weekdays.map((day, index) => (
-    <View style={{ flex: 1 }}>
+  const weekdayMeals = useSelector((state) => state.meals.weekMeals);
+  console.log(weekdayMeals['Monday'].imageUrl);
+
+  const dispatch = useDispatch();
+ 
+  return Object.keys(weekdayMeals).map((key, index) => 
+    (
+    <View style={{ flex: 1 }} key={index}>
       <View
         style={{
           alignItems: "center",
         }}
-        key={index}
       >
-        <Text style={{ fontSize: 20, fontFamily: "bb2-bold" }}>{day}</Text>
+        <Text style={{ fontSize: 20, fontFamily: "bb2-bold" }}>{key}</Text>
       </View>
       <View style={styles.imageContainer}>
         <TouchableOpacity onPress={props.onSelect} style={styles.placeItem}>
-          <Image style={styles.image} source={{ uri: props.image }} />
+          <Image
+            style={styles.image}
+            source={{
+              uri: weekdayMeals[key].imageUrl
+                ? weekdayMeals[key].imageUrl
+                : "https://png.pngtree.com/png-vector/20191018/ourmid/pngtree-cross-icon-flat-style-png-image_1825560.jpg",
+            }}
+          />
           <View style={styles.infoContainer}>
-            <Text style={styles.title}>{props.title}</Text>
+            <Text style={styles.title}>{weekdayMeals[key].title?weekdayMeals[key].title:'No meal planned'}</Text>
           </View>
         </TouchableOpacity>
         <TouchableComponent
-          style={styles.shoppingButton}
-          onPress={() =>
-            props.navigation.navigate("Categories", { weekday: day })
-          }
+          onPress={() => {
+            dispatch(weekdayActions.setWeekday(key));
+            props.navigation.navigate("Categories");
+          }}
         >
           <Ionicons
             name={Platform.OS === "android" ? "md-add-circle" : "ios-add"}

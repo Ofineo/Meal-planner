@@ -6,10 +6,6 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/HeaderButton";
 
 const CategoriesScreen = (props) => {
-  const Weekday = props.route.params
-    ? props.route.params.weekday
-    : "Nothing to show";
-  console.log(Weekday);
 
   const renderGridItem = (itemData) => {
     return (

@@ -6,6 +6,7 @@ import { enableScreens } from "react-native-screens";
 import { createStore, combineReducers } from "redux";
 import mealsReducer from "./store/reducer/meals";
 import ingredientsReducer from "./store/reducer/ingredients";
+import weekdayReducer from "./store/reducer/weekday";
 import { Provider } from "react-redux";
 import { applyMiddleware } from "redux";
 import ReduxThunk from "redux-thunk";
@@ -14,7 +15,8 @@ enableScreens();
 
 const rootReducer = combineReducers({
   meals: mealsReducer,
-  ingredients: ingredientsReducer
+  ingredients: ingredientsReducer,
+  weekday: weekdayReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
