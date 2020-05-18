@@ -55,7 +55,7 @@ export const MEALS = [
     'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg/800px-Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg',
     20,
     [
-      '4 Tomatoes',
+      ['4', 'Tomatoes'],
       '1 Tablespoon of Olive Oil',
       '1 Onion',
       '250g Spaghetti',

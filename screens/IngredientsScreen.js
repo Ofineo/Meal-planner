@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/HeaderButton";
@@ -7,8 +7,20 @@ import IngredientItem from "../components/IngredientItem";
 import * as ingredientsActions from "../store/actions/ingredients";
 
 const IngredientScreen = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const ingredients = useSelector((state) => state.ingredients.ingredients);
   const dispatch = useDispatch();
+
+  const fetchIngredients = async () => {
+    setIsLoading(true);
+    await dispatch(ingredientsActions.getIngredients())
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchIngredients();
+  }, [fetchIngredients]);
 
   return (
     <View style={styles.screen}>

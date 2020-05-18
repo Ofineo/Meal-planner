@@ -22,12 +22,11 @@ const TouchableComponent =
 
 const WeekdayComponent = (props) => {
   const weekdayMeals = useSelector((state) => state.meals.weekMeals);
-  console.log(weekdayMeals['Monday'].imageUrl);
+  console.log(weekdayMeals["Monday"].imageUrl);
 
   const dispatch = useDispatch();
- 
-  return Object.keys(weekdayMeals).map((key, index) => 
-    (
+
+  return Object.keys(weekdayMeals).map((key, index) => (
     <View style={{ flex: 1 }} key={index}>
       <View
         style={{
@@ -47,7 +46,11 @@ const WeekdayComponent = (props) => {
             }}
           />
           <View style={styles.infoContainer}>
-            <Text style={styles.title}>{weekdayMeals[key].title?weekdayMeals[key].title:'No meal planned'}</Text>
+            <Text style={styles.title}>
+              {weekdayMeals[key].title
+                ? weekdayMeals[key].title
+                : "No meal planned"}
+            </Text>
           </View>
         </TouchableOpacity>
         <TouchableComponent
@@ -68,18 +71,36 @@ const WeekdayComponent = (props) => {
 };
 
 const WeelPlannerScreen = (props) => {
+  const weekMeals = useSelector((state) => state.meals.weekMeals);
+
+  const prepareShoppingList = () => {
+    let totalMeals = [];
+    for (const key in weekMeals) {
+      if (weekMeals[key].ingredients) {
+        totalMeals = [...totalMeals, ...weekMeals[key].ingredients];
+      }
+    }
+
+    props.navigation.navigate("Shopping");
+  };
+
+  const imageThouchHandler = () => {
+    //TODO
+  };
+
   return (
     <View style={styles.screen}>
       <WeekdayComponent
         navigation={props.navigation}
         image="https://s3.amazonaws.com/pix.iemoji.com/images/emoji/apple/ios-12/256/shallow-pan-of-food.png"
         title="Paella"
+        onSelect={imageThouchHandler}
       />
       <View style={styles.button}>
         <Button
           title="Shopping list"
           color={Colors.primaryColor}
-          onPress={() => props.navigation.navigate("Shopping")}
+          onPress={prepareShoppingList}
         />
       </View>
     </View>
