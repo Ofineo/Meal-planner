@@ -34,6 +34,9 @@ import WeekPlannerScreen from "../screens/WeekPlannerScreen";
 import ShopListScreen, {
   screenOptions as ShopListScreenOptions,
 } from "../screens/ShopListScreen";
+import AddIngredient, {
+  screenOptions as AddIngredientScreenOptions,
+} from "../screens/AddIngredientScreen";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -221,6 +224,11 @@ export const IngredientsNavigator = () => {
         name="Ingredients"
         component={IngredientScreen}
         options={IngredientScreenOptions}
+      />
+      <IngredientsStackNavigator.Screen
+        name="AddIngredient"
+        component={AddIngredient}
+        options={AddIngredientScreenOptions}
       />
     </IngredientsStackNavigator.Navigator>
   );
