@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import { View, Text, FlatList, StyleSheet, Platform } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/HeaderButton";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,11 +12,10 @@ const IngredientScreen = (props) => {
   const ingredients = useSelector((state) => state.ingredients.ingredients);
   const dispatch = useDispatch();
 
-  const fetchIngredients = async () => {
+  const fetchIngredients = useCallback(async () => {
     setIsLoading(true);
-    await dispatch(ingredientsActions.getIngredients())
-    setIsLoading(false);
-  };
+    dispatch(ingredientsActions.getIngredients()).then(setIsLoading(false));
+  }, [setIsLoading, dispatch]);
 
   useEffect(() => {
     fetchIngredients();
@@ -29,18 +28,26 @@ const IngredientScreen = (props) => {
       <View style={styles.ingredientList}>
         <FlatList
           data={ingredients}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.name+item.id.toString()}
           renderItem={(itemData) => (
             <IngredientItem
               ingredient={itemData.item}
               title={itemData.item.name}
-              quantity={itemData.item.quantity}
+              quantity={itemData.item.quantity.toString()}
               id={itemData.item.id}
               subtractIngredient={(data) =>
-                dispatch(ingredientsActions.removeIngredient(data))
+                dispatch(
+                  ingredientsActions.removeIngredient(
+                    itemData.item
+                  )
+                )
               }
               addIngredient={(data) =>
-                dispatch(ingredientsActions.addIngredient(data))
+                dispatch(
+                  ingredientsActions.addIngredient(
+                    itemData.item
+                  )
+                )
               }
             />
           )}
@@ -78,6 +85,15 @@ export const screenOptions = (navData) => {
           onPress={() => {
             navData.navigation.toggleDrawer();
           }}
+        />
+      </HeaderButtons>
+    ),
+    headerRight:()=>(
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+        title='Add Ingredient'
+        iconName={Platform.OS === "android" ? "md-add-circle" : "ios-add"}
+        onPress={()=>{navData.navigation.navigate("AddIngredient");}}
         />
       </HeaderButtons>
     ),
