@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   errorText: {
-    fontFamily: "bb2",
+    fontFamily: "bb2-regular",
     fontSize: 13,
     color: "red",
   },
