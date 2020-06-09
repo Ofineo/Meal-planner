@@ -13,25 +13,24 @@ const initialState = {
 
 const ingredientsReducer = (state = initialState, action) => {
   let ingIndex, updatedIng, updatedIngState;
-  console.log(action);
   switch (action.type) {
     case GET_INGREDIENTS:
+      action.ingredients.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)); 
       return {
         ...state,
         ingredients: action.ingredients,
       };
 
     case ADD_INGREDIENT:
-      ingIndex = state.ingredients.findIndex(
-        (ing) => ing.id === action.ingredient.id
-      );
-      updatedIng = new Ingredient(
+      
+      ingredient = new Ingredient(
         action.ingredient.id,
         action.ingredient.name,
-        action.ingredient.quantity + 1
+        action.ingredient.quantity
       );
+
       updatedIngState = [...state.ingredients];
-      updatedIngState[ingIndex] = updatedIng;
+      updatedIngState.push(ingredient);
 
       return {
         ...state,
@@ -44,7 +43,7 @@ const ingredientsReducer = (state = initialState, action) => {
       updatedIng = new Ingredient(
         action.ingredient.id,
         action.ingredient.name,
-        action.ingredient.quantity - 1
+        action.ingredient.quantity
       );
       updatedIngState = [...state.ingredients];
       updatedIngState[ingIndex] = updatedIng;
