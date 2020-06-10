@@ -1,10 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet, Platform } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Platform,
+  ActivityIndicator,
+} from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/HeaderButton";
 import { useSelector, useDispatch } from "react-redux";
 import IngredientItem from "../components/IngredientItem";
 import * as ingredientsActions from "../store/actions/ingredients";
+import Colors from "../constants/Colors";
 
 const IngredientScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,11 +32,15 @@ const IngredientScreen = (props) => {
   return (
     <View style={styles.screen}>
       <Text style={styles.title}>Available Ingredients</Text>
-
+      {isLoading && (
+        <View style={StyleSheet.centered}>
+          <ActivityIndicator size="large" color={Colors.accentColor} />
+        </View>
+      )}
       <View style={styles.ingredientList}>
         <FlatList
           data={ingredients}
-          keyExtractor={(item) => item.name+item.id.toString()}
+          keyExtractor={(item) => item.name + item.id.toString()}
           renderItem={(itemData) => (
             <IngredientItem
               ingredient={itemData.item}
@@ -36,18 +48,10 @@ const IngredientScreen = (props) => {
               quantity={itemData.item.quantity.toString()}
               id={itemData.item.id}
               subtractIngredient={(data) =>
-                dispatch(
-                  ingredientsActions.removeIngredient(
-                    itemData.item
-                  )
-                )
+                dispatch(ingredientsActions.removeIngredient(itemData.item))
               }
               addIngredient={(data) =>
-                dispatch(
-                  ingredientsActions.addIngredient(
-                    itemData.item
-                  )
-                )
+                dispatch(ingredientsActions.addIngredient(itemData.item))
               }
             />
           )}
@@ -73,6 +77,11 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     fontFamily: "bb2-regular",
   },
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export const screenOptions = (navData) => {
@@ -88,12 +97,14 @@ export const screenOptions = (navData) => {
         />
       </HeaderButtons>
     ),
-    headerRight:()=>(
+    headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
-        title='Add Ingredient'
-        iconName={Platform.OS === "android" ? "md-add-circle" : "ios-add"}
-        onPress={()=>{navData.navigation.navigate("AddIngredient");}}
+          title="Add Ingredient"
+          iconName={Platform.OS === "android" ? "md-add-circle" : "ios-add"}
+          onPress={() => {
+            navData.navigation.navigate("AddIngredient");
+          }}
         />
       </HeaderButtons>
     ),

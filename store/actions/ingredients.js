@@ -3,16 +3,18 @@ export const ADD_INGREDIENT = "ADD_INGREDIENT";
 export const REMOVE_INGREDIENT = "REMOVE_INGREDIENT";
 
 export const getIngredients = () => {
+  console.log("get ingredient");
   try {
     return async (dispatch) => {
       const response = await fetch(
         "https://mealschedule.herokuapp.com/ingredients"
-      );
+        );
 
       if (!response.ok) {
         throw new Error("Something went wrong");
       }
       const resData = await response.json();
+      console.log(resData);
 
       dispatch({ type: GET_INGREDIENTS, ingredients: resData.ingredients });
     };
@@ -22,16 +24,16 @@ export const getIngredients = () => {
   }
 };
 
-export const addIngredient = (name, quantity) => {
-  console.log("action", name, quantity);
+export const addIngredient = (name, quantity, mealId=1) => {
+  console.log("action", name, quantity,JSON.stringify({'name':name, 'quantity':quantity,'meal_id':mealId}));
   try {
     return async (dispatch) => {
       const response = await fetch(
-        `https://mealschedule.herokuapp.com/ingredients/`,
+        `https://mealschedule.herokuapp.com/ingredients`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(name, quantity),
+          body: JSON.stringify({'name':name, 'quantity':quantity,'meal_id':mealId}),
         }
       );
 
