@@ -3,18 +3,16 @@ export const ADD_INGREDIENT = "ADD_INGREDIENT";
 export const REMOVE_INGREDIENT = "REMOVE_INGREDIENT";
 
 export const getIngredients = () => {
-  console.log("get ingredient");
   try {
     return async (dispatch) => {
       const response = await fetch(
         "https://mealschedule.herokuapp.com/ingredients"
-        );
+      );
 
       if (!response.ok) {
         throw new Error("Something went wrong");
       }
       const resData = await response.json();
-      console.log(resData);
 
       dispatch({ type: GET_INGREDIENTS, ingredients: resData.ingredients });
     };
@@ -24,8 +22,13 @@ export const getIngredients = () => {
   }
 };
 
-export const addIngredient = (name, quantity, mealId=1) => {
-  console.log("action", name, quantity,JSON.stringify({'name':name, 'quantity':quantity,'meal_id':mealId}));
+export const addIngredient = (name, quantity, mealId = 1) => {
+  console.log(
+    "action",
+    name,
+    quantity,
+    JSON.stringify({ name: name, quantity: quantity, meal_id: mealId })
+  );
   try {
     return async (dispatch) => {
       const response = await fetch(
@@ -33,7 +36,11 @@ export const addIngredient = (name, quantity, mealId=1) => {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({'name':name, 'quantity':quantity,'meal_id':mealId}),
+          body: JSON.stringify({
+            name: name,
+            quantity: quantity,
+            meal_id: mealId,
+          }),
         }
       );
 
@@ -53,14 +60,44 @@ export const addIngredient = (name, quantity, mealId=1) => {
   }
 };
 
-export const removeIngredient = (ingredient) => {
-  ingredient.quantity = (+ingredient.quantity - 1).toString();
+export const PlusOneIngredient = (ingredient) => {
+  ingredient.quantity = ingredient.quantity + 1;
   try {
     return async (dispatch) => {
       const response = await fetch(
         `https://mealschedule.herokuapp.com/ingredients/${ingredient.id}`,
         {
-          method: "DELETE",
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(ingredient),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
+      const resData = await response.json();
+      console.log("response", resData);
+      dispatch({
+        type: REMOVE_INGREDIENT,
+        ingredient: resData.ingredient,
+      });
+    };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const MinusOneIngredient = (ingredient) => {
+  if (ingredient.quantity>0) ingredient.quantity = ingredient.quantity - 1;
+  
+  try {
+    return async (dispatch) => {
+      const response = await fetch(
+        `https://mealschedule.herokuapp.com/ingredients/${ingredient.id}`,
+        {
+          method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(ingredient),
         }

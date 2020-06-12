@@ -48,10 +48,10 @@ const IngredientScreen = (props) => {
               quantity={itemData.item.quantity.toString()}
               id={itemData.item.id}
               subtractIngredient={(data) =>
-                dispatch(ingredientsActions.removeIngredient(itemData.item))
+                dispatch(ingredientsActions.MinusOneIngredient(itemData.item))
               }
               addIngredient={(data) =>
-                dispatch(ingredientsActions.addIngredient(itemData.item))
+                dispatch(ingredientsActions.PlusOneIngredient(itemData.item))
               }
             />
           )}
