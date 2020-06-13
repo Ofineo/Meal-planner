@@ -15,10 +15,12 @@ const ingredientsReducer = (state = initialState, action) => {
   let ingIndex, updatedIng, updatedIngState;
   switch (action.type) {
     case GET_INGREDIENTS:
-      action.ingredients.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)); 
+      //FILTER BY MEAL ID 1; those are the generic ingredients; all others are assigned to a specific meal and would otherwise show many times in the list
+      let mainIngredients = action.ingredients.filter(ing=> ing.meal_id === 1);
+      mainIngredients.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)); 
       return {
         ...state,
-        ingredients: action.ingredients,
+        ingredients: mainIngredients,
       };
 
     case ADD_INGREDIENT:

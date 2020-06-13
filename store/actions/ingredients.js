@@ -48,7 +48,6 @@ export const addIngredient = (name, quantity, mealId = 1) => {
         throw new Error("Something went wrong");
       }
       const resData = await response.json();
-      console.log("resData in Actions Ingredients", resData);
       dispatch({
         type: ADD_INGREDIENT,
         ingredient: resData.ingredient,
@@ -77,7 +76,6 @@ export const PlusOneIngredient = (ingredient) => {
         throw new Error("Something went wrong");
       }
       const resData = await response.json();
-      console.log("response", resData);
       dispatch({
         type: REMOVE_INGREDIENT,
         ingredient: resData.ingredient,
@@ -91,7 +89,7 @@ export const PlusOneIngredient = (ingredient) => {
 
 export const MinusOneIngredient = (ingredient) => {
   if (ingredient.quantity>0) ingredient.quantity = ingredient.quantity - 1;
-  
+
   try {
     return async (dispatch) => {
       const response = await fetch(
@@ -107,7 +105,6 @@ export const MinusOneIngredient = (ingredient) => {
         throw new Error("Something went wrong");
       }
       const resData = await response.json();
-      console.log("response", resData);
       dispatch({
         type: REMOVE_INGREDIENT,
         ingredient: resData.ingredient,
