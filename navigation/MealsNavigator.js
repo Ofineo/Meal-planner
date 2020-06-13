@@ -29,7 +29,9 @@ import Colors from "../constants/Colors";
 import IngredientScreen, {
   screenOptions as IngredientScreenOptions,
 } from "../screens/IngredientsScreen";
-import AddNewMealScreen from "../screens/AddNewMealScreen";
+import AddNewMealScreen, {
+  screenOptions as addNewMealScreenOptions,
+} from "../screens/AddNewMealScreen";
 import WeekPlannerScreen from "../screens/WeekPlannerScreen";
 import ShopListScreen, {
   screenOptions as ShopListScreenOptions,
@@ -72,7 +74,11 @@ export const MealsNavigator = () => {
         component={MealDetailScreen}
         options={mealDetailScreenOptions}
       />
-      <MealsStackNavigator.Screen name="AddMeal" component={AddNewMealScreen} />
+      <MealsStackNavigator.Screen
+        name="AddMeal"
+        component={AddNewMealScreen}
+        options={addNewMealScreenOptions}
+      />
     </MealsStackNavigator.Navigator>
   );
 };
@@ -109,7 +115,11 @@ const WeekPlanNavigator = () => {
         component={MealDetailScreen}
         options={mealDetailScreenOptions}
       />
-      <MealsStackNavigator.Screen name="AddMeal" component={AddNewMealScreen} />
+      <MealsStackNavigator.Screen
+        name="AddMeal"
+        component={AddNewMealScreen}
+        options={addNewMealScreenOptions}
+      />
       <MealsStackNavigator.Screen name="Shopping" component={ShopListScreen} />
     </WeekPlanStackNavigator.Navigator>
   );

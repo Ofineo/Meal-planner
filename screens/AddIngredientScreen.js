@@ -2,7 +2,6 @@ import React, { useState, useReducer, useCallback } from "react";
 import {
   View,
   StyleSheet,
-  Text,
   ScrollView,
   KeyboardAvoidingView,
   Button,
@@ -11,6 +10,7 @@ import { useDispatch } from "react-redux";
 import * as ingredientsActions from "../store/actions/ingredients";
 import Input from "../components/Input";
 import Colors from "../constants/Colors";
+
 
 const formReducer = (state, action) => {
   if (action.type === "FORM_UPDATE") {
